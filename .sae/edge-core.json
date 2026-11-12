@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "repository": "pergolessi9-star/quantize-it-midi",
+  "control_plane_url": "https://sae-edge-core-30.pages.dev/",
+  "gateway": {
+    "mode": "catalog-only",
+    "enabled": false,
+    "origin": null
+  }
+}
