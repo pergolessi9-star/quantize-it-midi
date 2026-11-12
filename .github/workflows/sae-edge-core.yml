@@ -1,0 +1,21 @@
+name: SAE EDGE CORE policy
+on:
+  pull_request:
+    paths: ['.sae/edge-core.json', '.github/workflows/sae-edge-core.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Validate inactive registration
+        run: |
+          python3 - <<'PY'
+          import json,os
+          x=json.load(open('.sae/edge-core.json'))
+          assert x['schema_version']==1 and x['repository']==os.getenv('GITHUB_REPOSITORY')
+          assert x['control_plane_url']=='https://sae-edge-core-30.pages.dev/'
+          assert x['gateway']=={'mode':'catalog-only','enabled':False,'origin':None}
+          print('PASS: catalog-only; zero gateway traffic')
+          PY
